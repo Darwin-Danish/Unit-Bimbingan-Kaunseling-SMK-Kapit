@@ -1,40 +1,55 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { db } from '../lib/firebase'; // Ensure this path is correct
+import { ref, get, child } from 'firebase/database';
 
 export default function Gallery() {
-    const [years, setYears] = useState([]);
-    const [months, setMonths] = useState([]);
+    const [yearsAndMonths, setYearsAndMonths] = useState({});
     const [gallery, setGallery] = useState([]);
     const [year, setYear] = useState("");
     const [month, setMonth] = useState("");
 
     useEffect(() => {
-        // Fetch available years from Firebase
-        fetch("https://unit-bimbingan-dan-kaunseling-default-rtdb.firebaseio.com/gallery.json")
-            .then((res) => res.json())
-            .then((data) => setYears(Object.keys(data || {})));
+        // Fetch available years and months with content from Firebase
+        const fetchYearsAndMonths = async () => {
+            const dbRef = ref(db);
+            const snapshot = await get(child(dbRef, 'gallery'));
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const filteredData = {};
+                Object.entries(data || {}).forEach(([year, months]) => {
+                    const nonEmptyMonths = Object.entries(months)
+                        .filter(([_, images]) => Object.keys(images || {}).length > 0)
+                        .map(([month]) => month);
+                    if (nonEmptyMonths.length > 0) {
+                        filteredData[year] = nonEmptyMonths;
+                    }
+                });
+                setYearsAndMonths(filteredData);
+            }
+        };
+
+        fetchYearsAndMonths();
     }, []);
 
     const handleYearChange = (selectedYear) => {
         setYear(selectedYear);
         setMonth("");
-        setGallery([]); // Clear previous images
-
-        // Fetch months available for the selected year
-        fetch(`https://unit-bimbingan-dan-kaunseling-default-rtdb.firebaseio.com/gallery/${selectedYear}.json`)
-            .then((res) => res.json())
-            .then((data) => setMonths(Object.keys(data || {})));
+        setGallery([]);
     };
 
-    const handleMonthChange = (selectedMonth) => {
+    const handleMonthChange = async (selectedMonth) => {
         setMonth(selectedMonth);
         setGallery([]);
 
-        // Fetch images for the selected year and month
-        fetch(`https://unit-bimbingan-dan-kaunseling-default-rtdb.firebaseio.com/gallery/${year}/${selectedMonth}.json`)
-            .then((res) => res.json())
-            .then((data) => setGallery(Object.values(data || {})));
+        // Fetch images for the selected year and month directly from Firebase
+        const dbRef = ref(db);
+        const snapshot = await get(child(dbRef, `gallery/${year}/${selectedMonth}`));
+        if (snapshot.exists()) {
+            const data = snapshot.val();
+            setGallery(Object.values(data || {}));
+        }
     };
 
     return (
@@ -44,7 +59,7 @@ export default function Gallery() {
             {/* Select Year */}
             <select className="select-button" onChange={(e) => handleYearChange(e.target.value)}>
                 <option value="">Select Year</option>
-                {years.map((y) => (
+                {Object.keys(yearsAndMonths).map((y) => (
                     <option key={y} value={y}>{y}</option>
                 ))}
             </select>
@@ -53,7 +68,7 @@ export default function Gallery() {
             {year && (
                 <select className="select-button" onChange={(e) => handleMonthChange(e.target.value)}>
                     <option value="">Select Month</option>
-                    {months.map((m) => (
+                    {yearsAndMonths[year].map((m) => (
                         <option key={m} value={m}>{m}</option>
                     ))}
                 </select>
@@ -67,7 +82,7 @@ export default function Gallery() {
                             <div className="card" key={index}>
                                 {img.media_type === "photo" ? (
                                     <img 
-                                        src={`https://api.telegram.org/file/bot7399332532:AAGerDfEQKKssXI0cN_naYdL0EA-57Mp1OA/${img.file_id}`} 
+                                        src={img.s3_url} // Ensure this field is populated in your Firebase data
                                         alt={img.caption || "No Caption"} 
                                     />
                                 ) : (
