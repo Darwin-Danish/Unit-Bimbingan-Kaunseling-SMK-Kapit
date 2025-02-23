@@ -2,10 +2,10 @@ from telethon import TelegramClient
 from firebase_config import get_db
 from datetime import datetime
 
-API_ID = 'your_api_id'
-API_HASH = 'your_api_hash'
-CHANNEL_USERNAME = 'channel_username'
-client = TelegramClient('session_name', API_ID, API_HASH)
+API_ID = '22013333'
+API_HASH = '2e3777b23e3db284bf0e6241428a1ac3'
+CHANNEL_USERNAME = 'luminaTestChannel'
+client = TelegramClient('testUBK', API_ID, API_HASH)
 
 async def fetch_images():
     await client.start()
