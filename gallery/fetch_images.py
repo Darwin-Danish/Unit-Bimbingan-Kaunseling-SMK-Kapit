@@ -1,5 +1,5 @@
 from telethon import TelegramClient
-from firebase_config import get_db
+from gallery.firebase_config import get_db
 from datetime import datetime
 
 API_ID = '22013333'
