@@ -1,0 +1,11 @@
+# Backend Dependencies
+fastapi
+uvicorn
+telethon
+firebase-admin
+python-dotenv
+
+# For Async & HTTP Requests (optional but useful)
+httpx
+aiofiles
+aiohttp
