@@ -39,7 +39,7 @@ export default function Gallery() {
 
     return (
         <div className="container">
-            <h1>📸 Telegram Gallery</h1>
+            <h1>📸 Unit Bimbingan & Kaunseling Memories</h1>
 
             {/* Select Year */}
             <select className="select-button" onChange={(e) => handleYearChange(e.target.value)}>
