@@ -1,0 +1,4 @@
+Not searching for unused variables given on the command line.
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /Users/darwin/Unit-Bimbingan-Kaunseling-SMK-Kapit/ubk_app/android/app/.cxx/Debug/x493a4e5/x86_64
