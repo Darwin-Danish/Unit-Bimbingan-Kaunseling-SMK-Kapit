@@ -4,6 +4,7 @@ import 'package:ubk_app/intro_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ubk_app/home.dart';
 import 'package:ubk_app/login_screen.dart';
+import 'package:ubk_app/widgets/responsive_container.dart';
 
 void main() async {
   // Ensure Flutter is initialized
@@ -39,6 +40,14 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
+      builder: (context, child) {
+        // This builder wraps every screen in the app with the responsive container
+        return ResponsiveContainer(
+          backgroundColor: Colors.grey[200], // Background color for extra space
+          contentBackgroundColor: Colors.white, // Content area background
+          child: child!,
+        );
+      },
       home: const AuthWrapper(),
     );
   }
