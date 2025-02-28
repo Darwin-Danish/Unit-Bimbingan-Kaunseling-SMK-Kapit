@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ubk_app/home.dart'; // Import the home.dart file
+import 'package:ubk_app/login_screen.dart'; // Import the login_screen.dart file
 
 class IntroWidget extends StatelessWidget {
   const IntroWidget({
@@ -80,7 +80,7 @@ class IntroWidget extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => HomeScreen()),
+                              MaterialPageRoute(builder: (context) => const LoginScreen()),
                             );
                           },
                           child: const Text('Skip Now', style: TextStyle(color: Colors.black)),
@@ -106,7 +106,7 @@ class IntroWidget extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => HomeScreen()),
+                            MaterialPageRoute(builder: (context) => const LoginScreen()),
                           );
                         },
                         child: const Text('Get Started', style: TextStyle(color: Colors.white)),

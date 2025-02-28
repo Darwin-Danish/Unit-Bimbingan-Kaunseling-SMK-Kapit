@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "311509674507",
+    "firebase_url": "https://unit-bimbingan-dan-kaunseling-default-rtdb.firebaseio.com",
+    "project_id": "unit-bimbingan-dan-kaunseling",
+    "storage_bucket": "unit-bimbingan-dan-kaunseling.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311509674507:android:e1b391a7774dba5733b50e",
+        "android_client_info": {
+          "package_name": "com.example.ubk_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311509674507-1s906jdtpd847ci8uj08rpum03i0q5i9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ubk_app",
+            "certificate_hash": "af8f33537740632b44502858895b18fa6700e538"
+          }
+        },
+        {
+          "client_id": "311509674507-mqkj0ok3c7rs9eimuhmcke40votg43uo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGysD_Z28-Tj9lLZVloK4SpBeZ0QnHKe8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311509674507-mqkj0ok3c7rs9eimuhmcke40votg43uo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
