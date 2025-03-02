@@ -1,4 +1,6 @@
 firebase-admin.json
-flutter
+./flutter
 .venv
 .vscode
+./build/app/outputs/flutter-apk/app-debug.apk
+app-debug.apk

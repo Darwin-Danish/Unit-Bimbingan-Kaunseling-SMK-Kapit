@@ -5,6 +5,7 @@ import 'widgets/home_content.dart';
 import 'qna_screen.dart';
 import 'bot_screen.dart';
 import 'package:ubk_app/booking_screen.dart';
+import 'docs_screen.dart';
 import 'dart:math' as math;
 
 class HomeScreen extends StatefulWidget {
@@ -187,12 +188,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
 
   // Build a placeholder for the Docs screen
   Widget _buildDocsScreen() {
-    return const Center(
-      child: Text(
-        'Docs Screen',
-        style: TextStyle(fontSize: 24),
-      ),
-    );
+    return DocsScreen();
   }
 
   // Build the Q&A screen (from qna_screen.dart)
