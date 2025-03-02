@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'widgets/mood_selector.dart';
 import 'widgets/home_content.dart';
+import 'qna_screen.dart';
+import 'package:ubk_app/booking_screen.dart'; // for the FAB navigation
 import 'dart:math' as math;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
-
+  
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -47,119 +49,167 @@ class _HomeScreenState extends State<HomeScreen> {
     return formatter.format(now);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          // Blue header section
-          Container(
-            padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
-            color: Colors.blue,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Greeting and notification icon row
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          _getGreeting(),
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          _getCurrentDate(),
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: const Icon(
-                        Icons.notifications_none,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                // Search bar
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
+  // Build the Home tab (blue header and HomeContent)
+  Widget _buildHomeScreen() {
+    return Column(
+      children: [
+        // Blue header section
+        Container(
+          padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
+          color: Colors.blue,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Greeting and notification icon row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Icon(
-                        Icons.search,
-                        color: Colors.white,
+                      Text(
+                        _getGreeting(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            hintText: 'Search',
-                            hintStyle: TextStyle(color: Colors.white70),
-                            border: InputBorder.none,
-                          ),
-                          style: const TextStyle(color: Colors.white),
+                      Text(
+                        _getCurrentDate(),
+                        style: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 16,
                         ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 20),
-                // Mood prompt
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'How Do You Feel?',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      borderRadius: BorderRadius.circular(10),
                     ),
-                    Icon(
-                      Icons.more_horiz,
-                      color: Colors.white.withOpacity(0.7),
+                    child: const Icon(
+                      Icons.notifications_none,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              // Search bar
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          hintText: 'Search',
+                          hintStyle: TextStyle(color: Colors.white70),
+                          border: InputBorder.none,
+                        ),
+                        style: const TextStyle(color: Colors.white),
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 15),
-                // Mood selector widget
-                MoodSelector(onMoodSelected: _onMoodSelected),
-              ],
-            ),
+              ),
+              const SizedBox(height: 20),
+              // Mood prompt
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'How Do You Feel?',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Icon(
+                    Icons.more_horiz,
+                    color: Colors.white.withOpacity(0.7),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              // Mood selector widget
+              MoodSelector(onMoodSelected: _onMoodSelected),
+            ],
           ),
-          // White content area with scrolling
-          Expanded(
-            child: HomeContent(),
-          ),
-        ],
+        ),
+        // White content area with scrolling
+        Expanded(
+          child: HomeContent(),
+        ),
+      ],
+    );
+  }
+
+  // Build a placeholder for the Docs screen
+  Widget _buildDocsScreen() {
+    return const Center(
+      child: Text(
+        'Docs Screen',
+        style: TextStyle(fontSize: 24),
       ),
-      // FAB remains with a plus sign for booking
+    );
+  }
+
+  // Build the Q&A screen (from qua.dart / qna_screen.dart)
+  Widget _buildQAScreen() {
+    return const QnAScreen();
+  }
+
+  // Build a placeholder for the Bot screen
+  Widget _buildBotScreen() {
+    return const Center(
+      child: Text(
+        'Bot Screen',
+        style: TextStyle(fontSize: 24),
+      ),
+    );
+  }
+
+  // Choose the appropriate body content based on the selected index
+  Widget _buildBody() {
+    switch (_selectedIndex) {
+      case 0:
+        return _buildHomeScreen();
+      case 1:
+        return _buildDocsScreen();
+      case 2:
+        return _buildQAScreen();
+      case 3:
+        return _buildBotScreen();
+      default:
+        return Container();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _buildBody(),
+      // Floating Action Button remains for BookingScreen
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Handle booking button press
-          debugPrint("Booking button pressed");
-          // You can navigate to a booking screen or show a dialog here
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const BookingScreen(),
+            ),
+          );
         },
         backgroundColor: Colors.blue,
         elevation: 8,
@@ -169,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // Updated bottom navigation bar with symmetric left and right groups and extra gap for the FAB.
+      // Updated bottom navigation bar with two groups and gap for the FAB.
       bottomNavigationBar: BottomAppBar(
         notchMargin: 10,
         shape: const CircularNotch(),
@@ -227,8 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: TextStyle(
                   color: isSelected ? Colors.blue : Colors.grey,
                   fontSize: 12,
-                  fontWeight:
-                      isSelected ? FontWeight.bold : FontWeight.normal,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
             ],
