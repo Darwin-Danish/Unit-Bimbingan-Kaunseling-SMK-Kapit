@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'widgets/mood_selector.dart';
 import 'widgets/home_content.dart';
+import 'widgets/animated_mood_section.dart'; // New import
 import 'qna_screen.dart';
 import 'bot_screen.dart';
 import 'package:ubk_app/booking_screen.dart';
@@ -10,7 +10,7 @@ import 'dart:math' as math;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
-  
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   // 0: Home, 1: Docs, 2: Q&A, 3: Bot
   int _selectedIndex = 0;
   String _selectedMood = '';
-  
+
   late AnimationController _notchController;
 
   @override
@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       value: _selectedIndex == 0 ? 1.0 : 0.0,
     );
   }
-  
+
   @override
   void dispose() {
     _notchController.dispose();
@@ -75,12 +75,13 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
   }
 
   // Build the Home tab (blue header and HomeContent)
+
   Widget _buildHomeScreen() {
     return Column(
       children: [
-        // Blue header section
+        // Blue header section with balanced sizing
         Container(
-          padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
+          padding: const EdgeInsets.fromLTRB(16, 25, 16, 15),
           color: Colors.blue,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         _getGreeting(),
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 24,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -104,79 +105,96 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                         _getCurrentDate(),
                         style: const TextStyle(
                           color: Colors.white70,
-                          fontSize: 16,
+                          fontSize: 14,
                         ),
                       ),
                     ],
                   ),
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(
                       Icons.notifications_none,
                       color: Colors.white,
+                      size: 20,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               // Search bar
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.2),
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
                   children: [
                     const Icon(
                       Icons.search,
                       color: Colors.white,
+                      size: 18,
                     ),
-                    const SizedBox(width: 10),
+                    const SizedBox(width: 8),
                     Expanded(
                       child: TextField(
                         decoration: const InputDecoration(
                           hintText: 'Search',
-                          hintStyle: TextStyle(color: Colors.white70),
+                          hintStyle: TextStyle(color: Colors.white70, fontSize: 14),
                           border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(vertical: 8),
+                          isDense: true,
                         ),
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(color: Colors.white, fontSize: 14),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
-              // Mood prompt
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'How Do You Feel?',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Icon(
-                    Icons.more_horiz,
-                    color: Colors.white.withOpacity(0.7),
-                  ),
-                ],
-              ),
               const SizedBox(height: 15),
-              // Mood selector widget
-              MoodSelector(onMoodSelected: _onMoodSelected),
+              // Mood section is now handled by AnimatedMoodSection widget
+              AnimatedMoodSection(onMoodSelected: _onMoodSelected),
             ],
           ),
         ),
-        // White content area with scrolling
+        // White content area with smooth curved top and blue background
         Expanded(
-          child: HomeContent(),
+          child: Stack(
+            children: [
+              // Blue background that extends behind the curve
+              Container(
+                color: Colors.blue,
+              ),
+              // White content with curved top
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      offset: Offset(0, -2),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                  child: HomeContent(),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

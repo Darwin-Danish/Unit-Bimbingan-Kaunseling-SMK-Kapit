@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../controllers/mood_animation_controller.dart';
 
 class MoodSelector extends StatefulWidget {
   final Function(String) onMoodSelected;
@@ -33,6 +34,8 @@ class _MoodSelectorState extends State<MoodSelector> {
           _selectedMood = mood;
         });
         widget.onMoodSelected(mood);
+        // Hide the mood selector with animation when a mood is selected
+        MoodAnimationController().hideMoodSelector();
       },
       child: Column(
         children: [
